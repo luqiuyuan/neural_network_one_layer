@@ -35,7 +35,7 @@ def initializeParametersZeros(dimension_input, dimension_hidden_layer):
 
 # Initialize parameters to small random numbers
 def initializeParametersRandom(dimension_input, dimension_hidden_layer):
-    return (np.random.random((dimension_input, dimension_hidden_layer)) * 0.001, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.0001, 0)
+    return (np.random.random((dimension_input, dimension_hidden_layer)) * 0.0001, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.0001, 0)
 
 # Activation function sigma
 def sigmoid(x):
