@@ -7,7 +7,7 @@ DIMENSION_INPUT = 49152
 DIMENSION_HIDDEN_LAYER = 500
 NUM_ITERATIONS = 100
 m = 20 # Number of samples
-alpha = 0.0001 # Learning rate
+alpha = 0.01 # Learning rate
 SIZE_TESTING = 10 # Size of testing dataset
 
 # Read inputs
@@ -17,7 +17,7 @@ def readInputs(path):
         img = mpimg.imread(filename)
         X = np.hstack((X, img.reshape((DIMENSION_INPUT, 1))))
     # Normalize X so that it is in range [0, 1]
-    X = X / 256
+    X = X / 256 - 0.5
     return X
 
 # Read ground truth
@@ -35,7 +35,7 @@ def initializeParametersZeros(dimension_input, dimension_hidden_layer):
 
 # Initialize parameters to small random numbers
 def initializeParametersRandom(dimension_input, dimension_hidden_layer):
-    return (np.random.random((dimension_input, dimension_hidden_layer)) * 0.0001, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.0001, 0)
+    return ((np.random.random((dimension_input, dimension_hidden_layer)) - 0.5) * 0.01, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.001, 0)
 
 # Activation function sigma
 def sigmoid(x):
@@ -56,7 +56,7 @@ def calculateForwardPropagatation(X, W1, B1, W2, B2):
     A1 = relu(Z1)
     Z2 = W2.T.dot(A1) + B2
     A2 = sigmoid(Z2)
-    # print(Z2)
+    # print(Z1)
     return (Z1, A1, Z2, A2)
 
 # Backward propagation
