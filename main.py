@@ -5,7 +5,7 @@ import glob
 
 DIMENSION_INPUT = 49152
 DIMENSION_HIDDEN_LAYER = 500
-NUM_ITERATIONS = 100
+NUM_ITERATIONS = 200
 m = 20 # Number of samples
 alpha = 0.01 # Learning rate
 SIZE_TESTING = 10 # Size of testing dataset
@@ -35,7 +35,7 @@ def initializeParametersZeros(dimension_input, dimension_hidden_layer):
 
 # Initialize parameters to small random numbers
 def initializeParametersRandom(dimension_input, dimension_hidden_layer):
-    return ((np.random.random((dimension_input, dimension_hidden_layer)) - 0.5) * 0.01, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.001, 0)
+    return ((np.random.random((dimension_input, dimension_hidden_layer)) - 0.5) * 0.01, np.zeros((dimension_hidden_layer, 1)),(np.random.random((dimension_hidden_layer, 1)) - 0.5) * 0.01, 0)
 
 # Activation function sigma
 def sigmoid(x):
@@ -97,3 +97,33 @@ for i in range(0, NUM_ITERATIONS):
     B1 -= alpha * dB1
     W2 -= alpha * dW2
     B2 -= alpha * dB2
+
+# Plot
+fig = plt.figure()
+plt.plot(np.arange(200), Js, label="Cost")
+plt.xlabel("Iterations")
+plt.ylabel("Cost")
+plt.title("Training")
+plt.show()
+
+######################
+# Testing phase
+######################
+
+# Read inputs and ground truth for testing phase
+X = readInputs("./dataset/training/*.jpg")
+Y = readGroundTruth("./dataset/testing/data.txt")
+
+# Calculate the forward propagation for the testing dataset using trained parameters
+(Z1, A1, Z2, A2) = calculateForwardPropagatation(X, W1, B1, W2, B2)
+Y_hat = np.copy(A2)
+Y_hat[A2>0.5] = 1
+Y_hat[A2<=0.5] = 0
+
+# Calculate the precision
+num_corrects = 0
+for i in range(0, SIZE_TESTING):
+    if Y[0, i] == Y_hat[0, i]:
+        num_corrects += 1
+precision = num_corrects / SIZE_TESTING
+print("The precision of testing is " + str(precision*100) + "%.")
