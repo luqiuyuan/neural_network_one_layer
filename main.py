@@ -4,8 +4,8 @@ import numpy as np
 import glob
 
 DIMENSION_INPUT = 49152
-DIMENSION_HIDDEN_LAYER = 500
-NUM_ITERATIONS = 200
+DIMENSION_HIDDEN_LAYER = 1000
+NUM_ITERATIONS = 100
 m = 20 # Number of samples
 alpha = 0.01 # Learning rate
 SIZE_TESTING = 10 # Size of testing dataset
@@ -100,7 +100,7 @@ for i in range(0, NUM_ITERATIONS):
 
 # Plot
 fig = plt.figure()
-plt.plot(np.arange(200), Js, label="Cost")
+plt.plot(np.arange(NUM_ITERATIONS), Js, label="Cost")
 plt.xlabel("Iterations")
 plt.ylabel("Cost")
 plt.title("Training")
