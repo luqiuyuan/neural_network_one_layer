@@ -91,7 +91,6 @@ for i in range(0, NUM_ITERATIONS):
     J = calculateCost(Y, A2)[0, 0]
     Js = np.hstack((Js, np.array([J])))
     (dW2, dB2, dW1, dB1) = calculateBackwardPropagation(X, Y, Z1, A1, A2, W2)
-    # print(dW1)
     print(J)
     W1 -= alpha * dW1
     B1 -= alpha * dB1
